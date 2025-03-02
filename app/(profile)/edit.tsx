@@ -18,6 +18,7 @@ export default function ProfileEditScreen() {
   const params = useLocalSearchParams();
   const { language, theme, translation, colors } = useSettings();
   const [user, setUser] = useState<User | null>(null);
+  const [id, setId] = useState<number | null>(null);
   const [fullName, setFullName] = useState('');
   const [username, setUsername] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -31,6 +32,7 @@ export default function ProfileEditScreen() {
       const userParam = Array.isArray(params.user) ? params.user[0] : params.user;
       const theUser: User | null = userParam ? JSON.parse(userParam) : null;
       setUser(theUser);
+      setId(theUser?.id);
       setFullName(theUser?.fullName || '');
       setUsername(theUser?.username || '');
       setPhoneNumber(theUser?.phoneNumber || '');
@@ -90,7 +92,7 @@ export default function ProfileEditScreen() {
   };
 
   const handleSave = async () => {
-    if (!user) return;
+    if (!user || id === null) return;
 
     try {
       setUploading(true);
@@ -108,13 +110,10 @@ export default function ProfileEditScreen() {
         }
       }
 
-      const updatedUser = await handleUpdateUser(fullName, username, phoneNumber, avatarUrl || '');
+      const updatedUser = await handleUpdateUser(id!, fullName, username, phoneNumber, avatarUrl || '');
       Alert.alert('Success', 'Profile updated successfully!');
       
-      router.push({
-        pathname: "/(profile)/information",
-        params: { user: JSON.stringify(user) }
-      });
+      router.back()
     } catch (error) {
       console.error('Update failed', error);
       Alert.alert('Error', 'Could not update profile');

@@ -19,19 +19,17 @@ export default function ProfileScreen() {
     const router = useRouter();
     const params = useLocalSearchParams();
     const { language, theme, translation, colors } = useSettings();
-    const { handleLogout } = useAuth();
+    const { handleLogout, userInfo } = useAuth();
     const [user, setUser] = useState<User | null>(null);
 
     useEffect(() => {
-        try {
-            const userParam = Array.isArray(params.user) ? params.user[0] : params.user;
-            const theUser: User | null = userParam ? JSON.parse(userParam) : null;
-            setUser(theUser);
-        } catch (error) {
-            console.error("Invalid user data:", error);
-            setUser(null);
-        }
-    }, [params.user]);
+        const fetchUser = async () => {
+          const data = await userInfo();
+          setUser(data);
+        };
+    
+        fetchUser();
+      }, []);
 
     const navigateToEdit = () => {
         router.push({
@@ -73,7 +71,7 @@ export default function ProfileScreen() {
                         
                         <View style={styles.avatarContainer}>
                             <Image
-                                source={user?.avatar || require('../../assets/images/temp-user.png')}
+                                source={ user?.avatar ? { uri: user.avatar } : require('../../assets/images/temp-user.png') }
                                 style={styles.avatar}
                             />
                             <ThemedText style={styles.fullName}>

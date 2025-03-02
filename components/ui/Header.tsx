@@ -1,6 +1,6 @@
 import React from 'react';
 import { Colors } from '@/constants/Colors';
-import { View, StyleSheet, TextInput, TouchableOpacity, ViewStyle } from 'react-native';
+import { View, StyleSheet, TextInput, TouchableOpacity, ViewStyle, Alert, BackHandler } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { User } from '@/models/User';
@@ -35,11 +35,24 @@ const Header: React.FC<HeaderProps> = ({
 
   const navigateToSearch = () => {
     console.log('Searching for:', searchQuery);
+    router.push({
+      pathname: "/(products)/search",
+      params: { query: searchQuery }
+    });
   };
+
+    const backAction = () => {
+      Alert.alert("Thoát ứng dụng", "Bạn có chắc muốn thoát?", [
+        { text: "Hủy", style: "cancel" },
+        { text: "Thoát", onPress: () => BackHandler.exitApp() },
+      ]);
+      return true; 
+    };
+
 
   return (
     <View style={[styles.container, style]}>
-      <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
+      <TouchableOpacity onPress={() => backAction()} style={styles.backButton}>
         <Ionicons name="arrow-back" size={24} color={colors.text2} />
       </TouchableOpacity>
       

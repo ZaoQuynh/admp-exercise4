@@ -38,6 +38,7 @@ export default function RootLayout() {
         <Stack.Screen name="(profile)/information"/>
         <Stack.Screen name="(profile)/edit"/>
         <Stack.Screen name="(profile)/changeContact"/>
+        <Stack.Screen name="(products)/search.tsx"/>
       </Stack>
       <StatusBar style="auto" />
     </ThemeProvider>

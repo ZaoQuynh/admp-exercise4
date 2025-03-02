@@ -19,6 +19,7 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
 }) => {
   const router = useRouter();
 
+  const navigateToHome = () => router.push("/home");
   const navigateToCart = () => router.push("/(cart)/view");
   const navigateToFavorites = () => router.push("/(favorites)/view");
   const navigateToProfile = () => router.push("/(profile)/information");
@@ -26,7 +27,7 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }, style]}>
-      <TouchableOpacity style={styles.navItem} onPress={() => {}}>
+      <TouchableOpacity style={styles.navItem} onPress={navigateToHome}>
         <Ionicons name="home" size={24} color={colors.primary} />
         <Text style={[styles.navText, { color: colors.primary }, textStyle]}>
           {translation.home || 'Home'}

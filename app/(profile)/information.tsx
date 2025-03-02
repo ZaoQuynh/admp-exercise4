@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, Image, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, Image, ScrollView, TextStyle } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { ThemedText } from '@/components/ThemedText';
 import Button from '@/components/ui/Button';
@@ -7,6 +7,8 @@ import useSettings from '@/hooks/useSettings';
 import { User } from '@/models/User';
 import { useAuth } from '@/hooks/useAuth';
 import IconButton from '@/components/ui/IconButton';
+import BottomNavigation from '@/components/ui/BottomNavigation';
+
 
 const tierImages: Record<string, any> = {
     BRONZE: require('../../assets/images/bronze-medal.png'),
@@ -22,6 +24,9 @@ export default function ProfileScreen() {
     const { handleLogout, userInfo } = useAuth();
     const [user, setUser] = useState<User | null>(null);
 
+    const textStyle: TextStyle = {
+        color: colors.text2,
+      };
     useEffect(() => {
         const fetchUser = async () => {
           const data = await userInfo();
@@ -142,6 +147,13 @@ export default function ProfileScreen() {
                     </View>
                 </View>
             </ScrollView>
+            
+
+      <BottomNavigation 
+        colors={colors}
+        translation={translation}
+        textStyle={textStyle}
+      />
         </SafeAreaView>
     );
 }

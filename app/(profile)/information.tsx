@@ -7,8 +7,6 @@ import useSettings from '@/hooks/useSettings';
 import { User } from '@/models/User';
 import { useAuth } from '@/hooks/useAuth';
 import IconButton from '@/components/ui/IconButton';
-import BottomNavigation from '@/components/ui/BottomNavigation';
-
 
 const tierImages: Record<string, any> = {
     BRONZE: require('../../assets/images/bronze-medal.png'),
@@ -147,13 +145,7 @@ export default function ProfileScreen() {
                     </View>
                 </View>
             </ScrollView>
-            
 
-      <BottomNavigation 
-        colors={colors}
-        translation={translation}
-        textStyle={textStyle}
-      />
         </SafeAreaView>
     );
 }

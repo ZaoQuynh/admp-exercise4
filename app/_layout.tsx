@@ -30,7 +30,6 @@ export default function RootLayout() {
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="index"/>
         <Stack.Screen name="onBoarding"/>
-        <Stack.Screen name="home"/>
         <Stack.Screen name="(auth)/login"/>
         <Stack.Screen name="(auth)/register"/>
         <Stack.Screen name="(auth)/registerOtp"/>
@@ -38,7 +37,15 @@ export default function RootLayout() {
         <Stack.Screen name="(profile)/information"/>
         <Stack.Screen name="(profile)/edit"/>
         <Stack.Screen name="(profile)/changeContact"/>
-        <Stack.Screen name="(products)/search.tsx"/>
+        <Stack.Screen name="(products)/search"/>
+        <Stack.Screen name="(products)/details"/>
+        <Stack.Screen name="(products)/category"/>
+        <Stack.Screen name="(tabs)/_layout"/>
+        <Stack.Screen name="(tabs)/home"/>
+        <Stack.Screen name="(tabs)/explore"/>
+        <Stack.Screen name="(tabs)/cart"/>
+        <Stack.Screen name="(tabs)/favorites"/>
+        <Stack.Screen name="(tabs)/profile"/>
       </Stack>
       <StatusBar style="auto" />
     </ThemeProvider>

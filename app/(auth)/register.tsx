@@ -148,7 +148,7 @@ export default function RegisterScreen() {
     if (!(await validateForm())) return;
 
     try {
-      const data = await handleRegister(fullName, email, username, password);
+      const data = await handleRegister(fullName, email, username, phoneNumber, password);
       console.log('Register Success:', data);
 
       router.push({

@@ -37,8 +37,11 @@ export default function ProductList({ products, colors, translation, categoryId,
     return result;
   }, [products, categoryId, searchQuery]);
 
-  const handleProductPress = (productId: string) => {
-    router.push(`/product/${productId}`);
+  const handleProductPress = (item: Product) => {
+      router.push({
+        pathname: "/(products)/details",
+        params: { product: JSON.stringify(item) }
+      });
   };
 
   const handleLoadMore = () => {
@@ -68,7 +71,7 @@ export default function ProductList({ products, colors, translation, categoryId,
           styles.productItem,
           isEven ? styles.leftItem : styles.rightItem
         ]} 
-        onPress={() => handleProductPress(product.id)}
+        onPress={() => handleProductPress(product)}
       >
         <Image source={{ uri: product.plant.img }} style={styles.productImage} />
         <View style={styles.productInfo}>

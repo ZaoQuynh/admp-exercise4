@@ -1,11 +1,12 @@
-import React from 'react'; 
+// File: components/Categories.tsx
+import React from 'react';
 import { Colors } from '@/constants/Colors';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet, ViewStyle, TextStyle } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { Attribute } from '@/models/Attribute';
+import { Product } from '@/models/Product';
 
-// Define translations for categories
 const translations: { [key: string]: { [key: string]: string } } = {
   en: {
     SMALL: "Small",
@@ -50,6 +51,7 @@ const translations: { [key: string]: { [key: string]: string } } = {
 
 interface CategoriesProps {
   categories: Attribute[];
+  products: Product[];
   colors: any;
   translation: any;
   language: "en" | "vi" | "ko";
@@ -59,6 +61,7 @@ interface CategoriesProps {
 
 const Categories: React.FC<CategoriesProps> = ({
   categories,
+  products,
   colors,
   translation,
   language,
@@ -67,25 +70,27 @@ const Categories: React.FC<CategoriesProps> = ({
 }) => {
   const router = useRouter();
 
-  const navigateToCategory = (categoryId: number) => {
-    router.push({
-      pathname: "/(products)/category",
-      params: { categoryId: categoryId.toString() }
+  const filterProductsByCategory = (category: Attribute): Product[] => {
+    return products.filter(product => {
+      return product.plant.attributes?.some(attr => attr.id === category.id);
     });
   };
 
-  // Helper function to get translated category name
+  const navigateToCategory = (category: Attribute) => {
+    const filteredProducts = filterProductsByCategory(category);
+    router.push({
+      pathname: "/(products)/category",
+      params: { 
+        products: JSON.stringify(filteredProducts),
+        categoryName: getTranslatedName(category.name),
+        categoryIcon: category.icon
+      }
+    });
+  };
+
   const getTranslatedName = (categoryName: string): string => {
-    // Make sure we only use uppercase keys to match the translation dictionary
     const key = categoryName.toUpperCase();
-    
-    // Check if the language and key exist in translations
-    if (translations[language] && translations[language][key]) {
-      return translations[language][key];
-    }
-    
-    // Fallback to original name if translation not found
-    return categoryName;
+    return translations[language]?.[key] || categoryName;
   };
 
   return (
@@ -98,9 +103,9 @@ const Categories: React.FC<CategoriesProps> = ({
           <TouchableOpacity
             key={category.id}
             style={styles.categoryItem}
-            onPress={() => navigateToCategory(category.id)}
+            onPress={() => navigateToCategory(category)}
           >
-            <View style={[styles.categoryIcon, { backgroundColor: colors.background }]}> 
+            <View style={[styles.categoryIcon, { backgroundColor: colors.background }]}>
               <Ionicons name={category.icon as any} size={28} color={colors.text2} />
             </View>
             <Text style={[styles.categoryName, { color: colors.text2 }, textStyle]}>

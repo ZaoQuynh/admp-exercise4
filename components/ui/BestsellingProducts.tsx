@@ -13,10 +13,10 @@ interface BestSellingProps {
 export default function BestSelling({ products, colors, translation }: BestSellingProps) {
   const router = useRouter();
 
-  const navigateToProductDetail = (product: Product) => {
+  const navigateToProductDetail = (item: Product) => {
     router.push({
-      pathname: "/(products)/detail",
-      params: { productId: product.id.toString() }
+      pathname: "/(products)/details",
+      params: { product: JSON.stringify(item) }
     });
   };
 

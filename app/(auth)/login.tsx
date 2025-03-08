@@ -54,9 +54,11 @@ export default function LoginScreen() {
         const message = translation.accountNotVerified || 'Your account is not verified. Please verify your email';
         ToastHelper.showInfo(errorTitle, message);
         router.replace({ pathname: "/(auth)/registerOtp", params: { email: user.email } });
+        return;
       }
 
-      router.replace("/home");
+      // router.replace("/home");
+      router.replace("/(tabs)/home")
     } catch (err) {
       const errorMessage = translation.loginFailedEmailOrPassword || 'Please check your email and password';
       ToastHelper.showError(errorTitle, errorMessage);

@@ -6,9 +6,11 @@ import { useRouter } from 'expo-router';
 import { User } from '@/models/User';
 import Button from '@/components/ui/Button';
 import AvatarButton from '@/components/ui/AvatarButton';
+import { Product } from '@/models/Product';
 
-interface HeaderProps {
+interface HomeHeaderProps {
   user: User | null;
+  products: Product[];
   searchQuery: string;
   setSearchQuery: (query: string) => void;
   colors: any;
@@ -16,8 +18,9 @@ interface HeaderProps {
   style?: ViewStyle;
 }
 
-const Header: React.FC<HeaderProps> = ({
+const HomeHeader: React.FC<HomeHeaderProps> = ({
   user,
+  products,
   searchQuery,
   setSearchQuery,
   colors,
@@ -37,17 +40,19 @@ const Header: React.FC<HeaderProps> = ({
     console.log('Searching for:', searchQuery);
     router.push({
       pathname: "/(products)/search",
-      params: { query: searchQuery }
+      params: { query: searchQuery, 
+                products: JSON.stringify(products)
+      }
     });
   };
 
-    const backAction = () => {
-      Alert.alert("Thoát ứng dụng", "Bạn có chắc muốn thoát?", [
-        { text: "Hủy", style: "cancel" },
-        { text: "Thoát", onPress: () => BackHandler.exitApp() },
-      ]);
-      return true; 
-    };
+  const backAction = () => {
+    Alert.alert("Thoát ứng dụng", "Bạn có chắc muốn thoát?", [
+      { text: "Hủy", style: "cancel" },
+      { text: "Thoát", onPress: () => BackHandler.exitApp() },
+    ]);
+    return true; 
+  };
 
 
   return (
@@ -134,4 +139,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Header;
+export default HomeHeader;
